@@ -1,38 +1,176 @@
-.App {
-  text-align: center;
+.loginSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.loginHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.5em;
+  font-size: 1.25rem;
+  margin-bottom: 1em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.formLogin {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: white;
+  box-shadow: 0px 2px 8px 4px #888888;
+  gap: 1em;
+  padding: 2.5em;
+}
+
+.formInputLogin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2em;
+  width: 100%;
+}
+
+input {
+  padding: 0.5em;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  padding: 0.5em;
+  background-color: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.formButtonLogin {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.sideBavNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 8px 2px #888888;
+  width: 70px;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+  background-color: white;
+}
+
+.sideBarIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.breadcrumbs {
+  border: 2px solid rgba(128, 128, 128, 0.568);
+  font-size: 1.25rem;
+  padding: 0.5em;
+}
+
+.dashboard {
+  width: 100%;
+  overflow-y: scroll;
+  padding: 1em;
+}
+
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.568);
+  background-color: whitesmoke;
+}
+
+.dropdown span {
+  color: rgb(42, 110, 235);
+}
+
+.dropdownIcon {
+  width: 100px;
+  height: 100px;
+}
+
+.menu {
+  width: 20px;
+  height: 20px;
+  padding: 1em;
+  top: 0;
+  right: 0;
+  position: absolute;
+}
+
+.dropdownContainer{
+  margin-top: 1.5em;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid rgba(128, 128, 128, 0.568);
+}
+
+.dropdownBox {
+  display: grid;
+  grid-template-columns: 1fr ;
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 300px;
+  height: 0;
+  transition: all 1s ease-in-out;
+}
+
+.dropdownOn {
+  height: auto;
+}
+
+.dropdownContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+}
+
+.dropdownContentText > p {
+  font-size: 1.25rem;
+}
+
+.dropdownContentText > ul {
+  list-style-type: disc;
+  padding-left: 1em;
+  color: rgb(42, 110, 235);
+}
+
+@media (min-width: 768px) {
+  .sideBarIcon {
+    width: 55px;
+    height: 55px;
   }
-  to {
-    transform: rotate(360deg);
+  .sideBavNav {
+    width: 100px;
+  }
+  .dropdown {
+    padding-left: 15px;
+    gap: 1em;
+  }
+  .dropdown p{
+    font-size: 1.3rem;
+  }
+
+  .dropdownIcon {
+    width: 150px;
+    height: 150px;
+  }
+  .dropdownBox{
+    grid-template-columns: 1fr 1fr;
   }
 }
