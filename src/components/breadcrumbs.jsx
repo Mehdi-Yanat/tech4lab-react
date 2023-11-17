@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Breadcrumbs() {
+function Breadcrumbs({ dropDownLink }) {
   return (
     <div className='breadcrumbs' >
-        <span> {`> Home/site `}</span>
+      <span> {`> Home${dropDownLink} `}</span>
     </div>
   )
 }

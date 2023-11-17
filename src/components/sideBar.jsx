@@ -3,24 +3,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faIndustry, faUsers, faCubes, faGear } from '@fortawesome/free-solid-svg-icons'
 import MachineIcon from '../assets/images/machine.png'
 
-function SideBar() {
+function SideBar({ setDropDownLink }) {
     return (
         <nav className='sideBavNav' >
             <ul>
-                <li>
-                    <FontAwesomeIcon className='sideBarIcon' icon={faHouse} />
+                <li >
+                    <FontAwesomeIcon onClick={() => setDropDownLink('/')} className='sideBarIcon' icon={faHouse} />
                 </li>
                 <li>
-                    <FontAwesomeIcon className='sideBarIcon' icon={faIndustry} />
+                    <FontAwesomeIcon onClick={() => setDropDownLink('/Sites de production')} className='sideBarIcon' icon={faIndustry} />
                 </li>
                 <li>
-                    <img className='sideBarIcon' src={MachineIcon} alt="" />
+                    <img className='sideBarIcon' onClick={() => setDropDownLink('/Machines')} src={MachineIcon} alt="" />
                 </li>
                 <li>
-                    <FontAwesomeIcon className='sideBarIcon' icon={faCubes} />
+                    <FontAwesomeIcon className='sideBarIcon' onClick={() => setDropDownLink('/Pièces')} icon={faCubes} />
                 </li>
                 <li>
-                    <FontAwesomeIcon className='sideBarIcon' icon={faUsers} />
+                    <FontAwesomeIcon className='sideBarIcon' onClick={() => setDropDownLink('/Utilisateurs')} icon={faUsers} />
                 </li>
             </ul>
             <div>

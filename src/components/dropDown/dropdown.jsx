@@ -1,19 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faIndustry, faBars, faX } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faX } from '@fortawesome/free-solid-svg-icons'
 import DropdownContent from './dropdownContent'
 
 
-function Dropdown({ name , img}) {
+function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink }) {
 
   const [isDropdownOn, setIsDropdownOn] = useState(false)
+
+  useEffect(() => {
+    if (isDropdownOn) {
+      setDropDownLink(`/${id}`)
+    }
+  }, [isDropdownOn])
+
+  useEffect(() => {
+    if (dropDownLink === "/") {
+      setIsDropdownOn(false)
+    }
+
+    if (dropDownLink !== `/${id}`) {
+      setIsDropdownOn(false)
+    } else {
+      setIsDropdownOn(true)
+    }
+  }, [dropDownLink, id])
 
   return (
     <div className='dropdownContainer' >
       <div onClick={() => setIsDropdownOn(value => !value)} className='dropdown' >
         <FontAwesomeIcon className='menu' icon={isDropdownOn ? faX : faBars} />
         <div>
-          <FontAwesomeIcon className='dropdownIcon' icon={faIndustry} />
+          <img className='dropdownIcon' src={img} alt={alt} />
         </div>
         <div>
           <p>{name}</p>
@@ -23,16 +41,9 @@ function Dropdown({ name , img}) {
         </div>
       </div>
       <div className={`dropdownBox ${isDropdownOn ? 'dropdownOn' : ''}`}>
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
-        <DropdownContent />
+        <DropdownContent dropDownLink={dropDownLink} />
+        <DropdownContent dropDownLink={dropDownLink} />
+        <DropdownContent dropDownLink={dropDownLink} />
       </div>
     </div>
   )
