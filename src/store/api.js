@@ -22,6 +22,26 @@ const api = createApi({
                 },
             }),
         }),
+        addProductionSite: builder.mutation({
+            query: ({ data, token }) => ({
+                url: '/production-sites/add',
+                method: 'POST',
+                body: data,
+                headers: {
+                    authorization: 'Bearer ' + token
+                },
+            }),
+        }),
+        addMachine: builder.mutation({
+            query: ({ data, token }) => ({
+                url: '/machines/add',
+                method: 'POST',
+                body: data,
+                headers: {
+                    authorization: 'Bearer ' + token
+                },
+            }),
+        }),
         upload: builder.mutation({
             query: ({ file, token }) => {
                 const formData = new FormData();
@@ -85,8 +105,8 @@ const api = createApi({
     }),
 });
 
-export const { useLoginMutation, useCheckTokenQuery, useGetAllSitesQuery, 
-    useGetAllMachinesQuery, useUploadMutation, useChangePasswordMutation, 
-    useGetAllPiecesQuery, useGetAllClientsQuery } = api;
+export const { useLoginMutation, useCheckTokenQuery, useGetAllSitesQuery,
+    useGetAllMachinesQuery, useUploadMutation, useChangePasswordMutation,
+    useGetAllPiecesQuery, useGetAllClientsQuery, useAddProductionSiteMutation, useAddMachineMutation } = api;
 
 export default api;

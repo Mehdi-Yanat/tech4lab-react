@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons'
 import DropdownContent from './dropdownContent'
+import Button from '../../elements/Button'
 
 
-function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink, data }) {
+function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink, data, setOpenPopup }) {
 
   const [isDropdownOn, setIsDropdownOn] = useState(false)
 
@@ -41,7 +42,10 @@ function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink, data }) {
         </div>
       </div>
       <div className={`dropdownBox ${isDropdownOn ? 'dropdownOn' : ''}`}>
-        {data?.map(el => <DropdownContent data={el} dropDownLink={dropDownLink} />)}
+        {data?.map((el, index) => <DropdownContent data={el} key={index} dropDownLink={dropDownLink} />)}
+        <div className='addButton' >
+          <Button onClick={() => setOpenPopup(true)} > Add {id} </Button>
+        </div>
       </div>
     </div>
   )

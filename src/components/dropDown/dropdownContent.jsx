@@ -60,7 +60,7 @@ function DropdownContent({ dropDownLink, data }) {
                 return <div className='dropdownContentText'>
                     <p>{data?.username || 'No Data Available'}</p>
                     <ul>
-                        {data.productionSite?.length ? data?.productionSite?.map(el => <li> {el.placeName} </li>) : 'No Data Available'}
+                        {data.productionSite?.length ? data?.productionSite?.map((el, index) => <li key={index} > {el.placeName} </li>) : 'No Data Available'}
                     </ul>
                 </div>
             default:

@@ -73,7 +73,12 @@ button {
   gap: 1em;
 }
 
+.addButton{
+  margin: auto;
+}
+
 .layout {
+  position: relative;
   display: flex;
   height: 100vh;
   background-color: white;
