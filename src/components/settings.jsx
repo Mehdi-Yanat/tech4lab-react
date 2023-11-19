@@ -6,7 +6,7 @@ import { getCookie } from 'react-use-cookie'
 import { useChangePasswordMutation, useUploadMutation } from '../store/api'
 import { toast } from 'react-toastify'
 
-function Settings() {
+function Settings({ user }) {
 
     const token = getCookie('auth-token')
     const [file, setFile] = useState(null);
@@ -69,11 +69,11 @@ function Settings() {
                     <Button> Changer </Button>
                 </div>
             </form>
-            <form className='settings' onSubmit={handleSubmit} action="upload.php" method="POST">
+            {user.role === "admin" ? <form className='settings' onSubmit={handleSubmit} action="upload.php" method="POST">
                 <input onChange={handleFileChange} type="file" />
                 <p>Upload your excel file to load data {file ? <span>{file?.name}</span> : ''} </p>
                 <button type="submit">Upload</button>
-            </form>
+            </form> : ''}
         </div>
     )
 }

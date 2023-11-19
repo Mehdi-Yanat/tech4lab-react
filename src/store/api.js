@@ -42,6 +42,26 @@ const api = createApi({
                 },
             }),
         }),
+        addPieces: builder.mutation({
+            query: ({ data, token }) => ({
+                url: '/pieces/add',
+                method: 'POST',
+                body: data,
+                headers: {
+                    authorization: 'Bearer ' + token
+                },
+            }),
+        }),
+        addClient: builder.mutation({
+            query: ({ data, token }) => ({
+                url: '/admin/add/clients',
+                method: 'POST',
+                body: data,
+                headers: {
+                    authorization: 'Bearer ' + token
+                },
+            }),
+        }),
         upload: builder.mutation({
             query: ({ file, token }) => {
                 const formData = new FormData();
@@ -107,6 +127,7 @@ const api = createApi({
 
 export const { useLoginMutation, useCheckTokenQuery, useGetAllSitesQuery,
     useGetAllMachinesQuery, useUploadMutation, useChangePasswordMutation,
-    useGetAllPiecesQuery, useGetAllClientsQuery, useAddProductionSiteMutation, useAddMachineMutation } = api;
+    useGetAllPiecesQuery, useGetAllClientsQuery, useAddProductionSiteMutation, useAddMachineMutation,
+    useAddPiecesMutation, useAddClientMutation } = api;
 
 export default api;

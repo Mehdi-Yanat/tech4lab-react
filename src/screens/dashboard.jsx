@@ -18,7 +18,6 @@ function Dashboard() {
 
   const token = getCookie('auth-token')
 
-  const [popupData, setPopupData] = useState()
 
   const [isAdmin, setIsAdmin] = useState(false)
   const [openPopup, setOpenPopup] = useState(false)
@@ -48,27 +47,12 @@ function Dashboard() {
     refetchClients()
   }
 
-  useEffect(() => {
-    const setPopupDataFunc = () => {
-      switch (dropDownLink) {
-        case '/Sites de production':
-          return setPopupData(sites?.productionSites)
-        case '/Machines':
-          return setPopupData(machineData?.machines)
-        case '/Pièces':
-          return setPopupData(piecesData?.pieces)
-        case '/Utilisateurs':
-          return setPopupData(clientData?.clients)
-        default:
-          break;
-      }
-    }
-    setPopupDataFunc()
-  }, [dropDownLink])
 
   return (
     <div className='layout'>
-      {openPopup ? <Popup refetchAll={refetchAll} setOpenPopup={setOpenPopup} popupData={popupData} dropDownLink={dropDownLink} /> : ''}
+      {openPopup ? <Popup user={user} refetchAll={refetchAll} setOpenPopup={setOpenPopup}
+        clients={clientData?.clients} sites={sites?.productionSites} machines={machineData?.machines} pieces={piecesData?.pieces}
+        dropDownLink={dropDownLink} /> : ''}
       {sites?.productionSites?.length ? <>
         <SideBar setDropDownLink={setDropDownLink} />
         <div className='dashboard'>
@@ -78,7 +62,7 @@ function Dashboard() {
             <Dropdown setOpenPopup={setOpenPopup} data={machineData?.machines} setDropDownLink={setDropDownLink} id={"Machines"} img={machineImage} dropDownLink={dropDownLink} alt={"machines"} name="Machines" />
             <Dropdown setOpenPopup={setOpenPopup} data={piecesData?.pieces} setDropDownLink={setDropDownLink} id={"Pièces"} img={gearImage} dropDownLink={dropDownLink} alt={"pieces"} name="Pièces" />
             {isAdmin ? <Dropdown setOpenPopup={setOpenPopup} data={clientData?.clients} setDropDownLink={setDropDownLink} id={"Utilisateurs"} img={usersImage} dropDownLink={dropDownLink} alt={"users"} name="Utilisateurs" /> : ''}
-          </> : <Settings />}
+          </> : <Settings user={user} />}
         </div>
       </> :
         <>

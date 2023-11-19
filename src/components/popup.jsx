@@ -5,36 +5,48 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Input from '../elements/Input'
 import Button from '../elements/Button'
 import { toast } from 'react-toastify'
-import { useAddMachineMutation, useAddProductionSiteMutation } from '../store/api'
+import { useAddClientMutation, useAddMachineMutation, useAddPiecesMutation, useAddProductionSiteMutation } from '../store/api'
 import { getCookie } from 'react-use-cookie'
 import Loading from '../screens/loading'
 
-function Popup({ dropDownLink, setOpenPopup, popupData, refetchAll }) {
+function Popup({ dropDownLink, setOpenPopup, sites, machines, pieces, refetchAll, clients, user }) {
 
     const token = getCookie('auth-token')
 
     const [addProductionSite, { data: addProductionSiteData, isLoading: addProductionSiteLoading }] = useAddProductionSiteMutation()
-    const [addMachine, { data: addMachineData, isLoading }] = useAddMachineMutation()
+    const [addMachine, { data: addMachineData, isLoading: addMachineLoading }] = useAddMachineMutation()
+    const [addPieces, { data: addPiecesData, isLoading: addPiecesLoading }] = useAddPiecesMutation()
+    const [addClient, { data: addClientData, isLoading: addClientLoading }] = useAddClientMutation()
 
     const [formValuesSites, setFormValuesSites] = useState({
         placeName: "",
+        ClientId: 0
     })
 
     const [formValuesMachines, setFormValuesMachines] = useState({
         machineName: "",
+        ClientId: 0,
         productionSiteId: 0
     })
 
     const [formValuesPieces, setFormValuesPieces] = useState({
-        placeName: "",
-        clientsId: ""
+        pieceName: "",
+        ClientId: 0,
+        productionSiteId: 0,
+        machineId: 0
+    })
+
+    const [formValuesClients, setFormValuesClients] = useState({
+        username: "",
+        password: "",
+        productionSiteId: 0
     })
 
     useEffect(() => {
-        if (addProductionSiteData?.success || addMachineData?.success) {
+        if (addProductionSiteData?.success || addMachineData?.success || addPiecesData?.success || addClientData?.success) {
             refetchAll()
         }
-    }, [addProductionSiteData, addMachineData, refetchAll])
+    }, [addProductionSiteData, addMachineData, addPiecesData, addClientData, refetchAll])
 
 
     const renderInput = () => {
@@ -45,6 +57,16 @@ function Popup({ dropDownLink, setOpenPopup, popupData, refetchAll }) {
                         <label>Place Name</label>
                         <Input placeholder="Site de production" type="text" value={formValuesSites.placeName} setFormValues={setFormValuesSites} name={"placeName"} />
                     </div>
+                    {user.role === "admin" ? <div className='formInputPopup'>
+                        <label>Client id</label>
+                        <select
+                            value={formValuesSites.ClientId}
+                            onChange={(e) => setFormValuesSites({ ...formValuesSites, ClientId: parseInt(e.target.value) })}
+                        >
+                            <option value="">Select Client</option>
+                            {clients.map((el, index) => <option key={el.id} value={el.id}>{el.username}</option>)}
+                        </select>
+                    </div> : ''}
                     <div className={"submitBtn"}>
                         <Button onClick={(e) => handleAddFunc(e, formValuesSites)}>
                             Submit
@@ -54,15 +76,21 @@ function Popup({ dropDownLink, setOpenPopup, popupData, refetchAll }) {
 
             case '/Machines':
 
-                const productionSite = popupData?.map(el => el.productionSite)
-                const uniqueProductionSites = Array.from(new Set(productionSite.map(el => el.id)))
-                    .map(id => productionSite.find(site => site.id === id));
-
                 return <>
                     <div className='formInputPopup'>
                         <label>Machine Name</label>
-                        <Input placeholder="Site de production" type="text" value={formValuesMachines.machineName} setFormValues={setFormValuesMachines} name={"machineName"} />
+                        <Input placeholder="Machine Name" type="text" value={formValuesMachines.machineName} setFormValues={setFormValuesMachines} name={"machineName"} />
                     </div>
+                    {user.role === "admin" ? <div className='formInputPopup'>
+                        <label>Client id</label>
+                        <select
+                            value={formValuesMachines.ClientId}
+                            onChange={(e) => setFormValuesMachines({ ...formValuesMachines, ClientId: parseInt(e.target.value) })}
+                        >
+                            <option value="">Select Client</option>
+                            {clients.map((el, index) => <option key={el?.id} value={el?.id}>{el?.username}</option>)}
+                        </select>
+                    </div> : ''}
                     <div className='formInputPopup'>
                         <label>Production Site</label>
                         <select
@@ -70,11 +98,81 @@ function Popup({ dropDownLink, setOpenPopup, popupData, refetchAll }) {
                             onChange={(e) => setFormValuesMachines({ ...formValuesMachines, productionSiteId: parseInt(e.target.value) })}
                         >
                             <option value="">Select Production Site</option>
-                            {uniqueProductionSites.map((el, index) => <option key={el.id} value={el.id}>{el.placeName}</option>)}
+                            {sites.map((el, index) => <option key={el?.id} value={el?.id}>{el?.placeName}</option>)}
                         </select>
                     </div>
                     <div className={"submitBtn"}>
                         <Button onClick={(e) => handleAddFunc(e, formValuesMachines)}>
+                            Submit
+                        </Button>
+                    </div>
+                </>
+
+            case '/Pièces':
+                return <>
+                    <div className='formInputPopup'>
+                        <label>Pieces Name</label>
+                        <Input placeholder="Pieces Name" type="text" value={formValuesPieces.pieceName} setFormValues={setFormValuesPieces} name={"pieceName"} />
+                    </div>
+                    {user.role === "admin" ? <div className='formInputPopup'>
+                        <label>Client id</label>
+                        <select
+                            value={formValuesPieces.ClientId}
+                            onChange={(e) => setFormValuesPieces({ ...formValuesPieces, ClientId: parseInt(e.target.value) })}
+                        >
+                            <option value="">Select Client</option>
+                            {clients.map((el, index) => <option key={el.id} value={el.id}>{el.username}</option>)}
+                        </select>
+                    </div> : ''}
+                    <div className='formInputPopup'>
+                        <label>Production Site</label>
+                        <select
+                            value={formValuesPieces.productionSiteId}
+                            onChange={(e) => setFormValuesPieces({ ...formValuesPieces, productionSiteId: parseInt(e.target.value) })}
+                        >
+                            <option value="">Select Production Site</option>
+                            {sites.map((el, index) => <option key={el?.id} value={el?.id}>{el?.placeName}</option>)}
+                        </select>
+                    </div>
+                    <div className='formInputPopup'>
+                        <label>Machine</label>
+                        <select
+                            value={formValuesPieces.machineId}
+                            onChange={(e) => setFormValuesPieces({ ...formValuesPieces, machineId: parseInt(e.target.value) })}
+                        >
+                            <option value="">Machines</option>
+                            {machines.map((el, index) => <option key={el?.id} value={el?.id}>{el?.machineName}</option>)}
+                        </select>
+                    </div>
+                    <div className={"submitBtn"}>
+                        <Button onClick={(e) => handleAddFunc(e, formValuesPieces)}>
+                            Submit
+                        </Button>
+                    </div>
+                </>
+
+            case '/Utilisateurs':
+                return <>
+                    <div className='formInputPopup'>
+                        <label>Client Name</label>
+                        <Input placeholder="username" type="text" value={formValuesClients.username} setFormValues={setFormValuesClients} name={"username"} />
+                    </div>
+                    <div className='formInputPopup'>
+                        <label>Client Password</label>
+                        <Input placeholder="password" type="password" value={formValuesClients.password} setFormValues={setFormValuesClients} name={"password"} />
+                    </div>
+                    <div className='formInputPopup'>
+                        <label>Production Site</label>
+                        <select
+                            value={formValuesClients.productionSiteId}
+                            onChange={(e) => setFormValuesClients({ ...formValuesClients, productionSiteId: parseInt(e.target.value) })}
+                        >
+                            <option value="">Select Production Site</option>
+                            {sites.map((el, index) => <option key={el?.id} value={el?.id}>{el?.placeName}</option>)}
+                        </select>
+                    </div>
+                    <div className={"submitBtn"}>
+                        <Button onClick={(e) => handleAddFunc(e, formValuesClients)}>
                             Submit
                         </Button>
                     </div>
@@ -96,6 +194,12 @@ function Popup({ dropDownLink, setOpenPopup, popupData, refetchAll }) {
                 case "/Machines":
                     result = await addMachine({ data, token }).unwrap();
                     break;
+                case "/Pièces":
+                    result = await addPieces({ data, token }).unwrap();
+                    break;
+                case "/Utilisateurs":
+                    result = await addClient({ data, token }).unwrap();
+                    break;
                 default:
                     break;
             }
@@ -109,7 +213,7 @@ function Popup({ dropDownLink, setOpenPopup, popupData, refetchAll }) {
         }
     };
 
-    if (addProductionSiteLoading) {
+    if (addProductionSiteLoading || addPiecesLoading || addMachineLoading || addClientLoading) {
         return <Loading />
     }
 
