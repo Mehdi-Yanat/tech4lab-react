@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
 }
 
 .loginHeader {
@@ -146,12 +147,12 @@ button {
 .dropdownContent {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 2em;
 }
 
 .dropdownContent img {
   width: 100px;
+  margin: auto;
 }
 
 .dropdownContentText > p {
@@ -186,5 +187,8 @@ button {
   }
   .dropdownBox {
     grid-template-columns: 1fr 1fr;
+  }
+  .dropdownContent {
+    margin-left: 100px;
   }
 }

@@ -1,9 +1,10 @@
 import React from "react"
 import './App.css';
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import PrivateRoutes from "./utils/PrivateRoute";
 import Dashboard from "./screens/dashboard";
 import Login from "./screens/login";
+
 
 function App() {
   return (

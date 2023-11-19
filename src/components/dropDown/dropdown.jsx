@@ -4,7 +4,7 @@ import { faBars, faX } from '@fortawesome/free-solid-svg-icons'
 import DropdownContent from './dropdownContent'
 
 
-function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink }) {
+function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink, data }) {
 
   const [isDropdownOn, setIsDropdownOn] = useState(false)
 
@@ -36,14 +36,12 @@ function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink }) {
         <div>
           <p>{name}</p>
           <span>
-            (3 sites)
+            ({data?.length} {id})
           </span>
         </div>
       </div>
       <div className={`dropdownBox ${isDropdownOn ? 'dropdownOn' : ''}`}>
-        <DropdownContent dropDownLink={dropDownLink} />
-        <DropdownContent dropDownLink={dropDownLink} />
-        <DropdownContent dropDownLink={dropDownLink} />
+        {data?.map(el => <DropdownContent data={el} dropDownLink={dropDownLink} />)}
       </div>
     </div>
   )

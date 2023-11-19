@@ -1,0 +1,38 @@
+.settings {
+  width: 100%;
+  margin-top: 4em;
+}
+
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+}
+
+.formInputPassword {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.formInputPassword input {
+    width: 100%;
+}
+
+.buttonContainer{
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+}
+
+@media (min-width:768px) {
+    .settings{
+        max-width: 500px;
+    }
+    .settingsContainer{
+        padding: 100px;
+    }
+}

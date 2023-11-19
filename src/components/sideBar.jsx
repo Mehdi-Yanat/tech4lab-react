@@ -24,7 +24,7 @@ function SideBar({ setDropDownLink }) {
                 </li>
             </ul>
             <div>
-                <FontAwesomeIcon className='sideBarIcon' icon={faGear} />
+                <FontAwesomeIcon className='sideBarIcon' onClick={() => setDropDownLink('/Settings')} icon={faGear} />
             </div>
         </nav>
     )
