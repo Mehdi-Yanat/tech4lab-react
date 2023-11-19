@@ -1,10 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import siteImg from '../../assets/images/factory.png'
 import machineImg from '../../assets/images/machineIcon.png'
 import gearImg from '../../assets/images/gear.png'
 import usersImg from '../../assets/images/users.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useDeleteClientMutation } from '../../store/api'
+import { getCookie } from 'react-use-cookie'
+import { toast } from 'react-toastify'
+import Loading from '../../screens/loading'
 
-function DropdownContent({ dropDownLink, data }) {
+
+function DropdownContent({ dropDownLink, data, refetchAll }) {
+
+    const token = getCookie('auth-token')
+    const [deleteClient, { data: deleteClientData, isLoading }] = useDeleteClientMutation()
+
+    const handleDeleteFunc = async () => {
+        try {
+
+            const result = await deleteClient({ clientId: data.id, token }).unwrap();
+            toast.success(result?.message)
+        } catch (error) {
+            if (Array.isArray(error.data?.message)) {
+                error.data?.message.map(el => toast.warn(el))
+            } else {
+                toast.warn(error.data?.message)
+            }
+        }
+    };
 
     const dropdownimage = () => {
         switch (dropDownLink) {
@@ -58,6 +82,9 @@ function DropdownContent({ dropDownLink, data }) {
                 </div>
             case '/Utilisateurs':
                 return <div className='dropdownContentText'>
+                    <div className='deleteIcone'>
+                        <FontAwesomeIcon onClick={handleDeleteFunc} icon={faTrash} style={{ cursor: "pointer" }} />
+                    </div>
                     <p>{data?.username || 'No Data Available'}</p>
                     <ul>
                         {data.productionSite?.length ? data?.productionSite?.map((el, index) => <li key={index} > {el.placeName} </li>) : 'No Data Available'}
@@ -68,8 +95,21 @@ function DropdownContent({ dropDownLink, data }) {
         }
     }
 
+    useEffect(() => {
+        if (deleteClientData?.success) {
+            refetchAll()
+        }
+    }, [deleteClientData, refetchAll])
+
+    if (isLoading) {
+        return <Loading />
+    }
+
+
+
     return (
         <div className='dropdownContent'>
+
             <div>
                 <img src={dropdownimage()} alt='site' />
             </div>

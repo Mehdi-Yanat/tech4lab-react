@@ -5,7 +5,7 @@ import DropdownContent from './dropdownContent'
 import Button from '../../elements/Button'
 
 
-function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink, data, setOpenPopup }) {
+function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink, data, setOpenPopup, refetchAll }) {
 
   const [isDropdownOn, setIsDropdownOn] = useState(false)
 
@@ -42,7 +42,7 @@ function Dropdown({ name, img, alt, id, dropDownLink, setDropDownLink, data, set
         </div>
       </div>
       <div className={`dropdownBox ${isDropdownOn ? 'dropdownOn' : ''}`}>
-        {data?.map((el, index) => <DropdownContent data={el} key={index} dropDownLink={dropDownLink} />)}
+        {data?.map((el, index) => <DropdownContent refetchAll={refetchAll} data={el} key={index} dropDownLink={dropDownLink} />)}
         <div className='addButton' >
           <Button onClick={() => setOpenPopup(true)} > Add {id} </Button>
         </div>

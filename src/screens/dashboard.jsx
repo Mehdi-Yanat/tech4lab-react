@@ -58,10 +58,10 @@ function Dashboard() {
         <div className='dashboard'>
           <Breadcrumbs dropDownLink={dropDownLink} />
           {dropDownLink !== "/Settings" ? <>
-            <Dropdown setOpenPopup={setOpenPopup} data={sites?.productionSites} setDropDownLink={setDropDownLink} id={"Sites de production"} dropDownLink={dropDownLink} alt={'factory'} img={factoryImage} name="Sites de production" />
-            <Dropdown setOpenPopup={setOpenPopup} data={machineData?.machines} setDropDownLink={setDropDownLink} id={"Machines"} img={machineImage} dropDownLink={dropDownLink} alt={"machines"} name="Machines" />
-            <Dropdown setOpenPopup={setOpenPopup} data={piecesData?.pieces} setDropDownLink={setDropDownLink} id={"Pièces"} img={gearImage} dropDownLink={dropDownLink} alt={"pieces"} name="Pièces" />
-            {isAdmin ? <Dropdown setOpenPopup={setOpenPopup} data={clientData?.clients} setDropDownLink={setDropDownLink} id={"Utilisateurs"} img={usersImage} dropDownLink={dropDownLink} alt={"users"} name="Utilisateurs" /> : ''}
+            <Dropdown refetchAll={null} setOpenPopup={setOpenPopup} data={sites?.productionSites} setDropDownLink={setDropDownLink} id={"Sites de production"} dropDownLink={dropDownLink} alt={'factory'} img={factoryImage} name="Sites de production" />
+            <Dropdown refetchAll={null} setOpenPopup={setOpenPopup} data={machineData?.machines} setDropDownLink={setDropDownLink} id={"Machines"} img={machineImage} dropDownLink={dropDownLink} alt={"machines"} name="Machines" />
+            <Dropdown refetchAll={null} setOpenPopup={setOpenPopup} data={piecesData?.pieces} setDropDownLink={setDropDownLink} id={"Pièces"} img={gearImage} dropDownLink={dropDownLink} alt={"pieces"} name="Pièces" />
+            {isAdmin ? <Dropdown refetchAll={refetchAll} setOpenPopup={setOpenPopup} data={clientData?.clients} setDropDownLink={setDropDownLink} id={"Utilisateurs"} img={usersImage} dropDownLink={dropDownLink} alt={"users"} name="Utilisateurs" /> : ''}
           </> : <Settings user={user} />}
         </div>
       </> :

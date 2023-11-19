@@ -160,6 +160,10 @@ button {
   margin: auto;
 }
 
+.dropdownContentText{
+  position: relative;
+}
+
 .dropdownContentText > p {
   font-size: 1.25rem;
 }
@@ -168,6 +172,13 @@ button {
   list-style-type: disc;
   padding-left: 1em;
   color: rgb(42, 110, 235);
+}
+
+.deleteIcone{
+  position: absolute;
+  right: 0;
+  color: red;
+  padding: 1em;
 }
 
 @media (min-width: 768px) {

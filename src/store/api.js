@@ -62,6 +62,15 @@ const api = createApi({
                 },
             }),
         }),
+        deleteClient: builder.mutation({
+            query: ({ clientId, token }) => ({
+                url: `/admin/delete/clients/${clientId}`,
+                method: 'DELETE',
+                headers: {
+                    authorization: 'Bearer ' + token
+                },
+            }),
+        }),
         upload: builder.mutation({
             query: ({ file, token }) => {
                 const formData = new FormData();
@@ -128,6 +137,6 @@ const api = createApi({
 export const { useLoginMutation, useCheckTokenQuery, useGetAllSitesQuery,
     useGetAllMachinesQuery, useUploadMutation, useChangePasswordMutation,
     useGetAllPiecesQuery, useGetAllClientsQuery, useAddProductionSiteMutation, useAddMachineMutation,
-    useAddPiecesMutation, useAddClientMutation } = api;
+    useAddPiecesMutation, useAddClientMutation, useDeleteClientMutation } = api;
 
 export default api;
